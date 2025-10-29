@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Math Mentor AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.10/katex.min.css" integrity="sha512-DYSPRHeidtbeUPKjEkX49Y2BpW38rI82E+5U/is2qPLG2S5J323HPn31v5+k4wJDM/u3L+bG7uT4w/M6nI5w5A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.10/katex.min.js" integrity="sha512-Ti1wbP8lYWjc22LzIe7yiybTLo8s/vO1vsAVs+L1wL9sOcp2jrd7y4D/fT/N4/A5L2kZHtM30nQvS3o5fJ8/ZA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.10/contrib/auto-render.min.js" integrity="sha512-gQ/rJL2TC2VnQ4L2LdcUas3T3T4AHR0YkS/C9aP+S/7GknoI/sJ1wBTltAxWStCOU5j6PjdvT3dADXgRjXx/vA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.25.0"
+  }
+}
+</script>
+<style>
+  @keyframes shake {
+    10%, 90% { transform: translate3d(-1px, 0, 0); }
+    20%, 80% { transform: translate3d(2px, 0, 0); }
+    30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+    40%, 60% { transform: translate3d(4px, 0, 0); }
+  }
+  .animate-shake {
+    animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-in-out forwards;
+  }
+</style>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body class="bg-slate-100 dark:bg-gradient-to-b dark:from-gray-950 dark:to-indigo-950">
+    <div id="root"></div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        // Since we are not using a bundler to process React-Markdown, we will manually trigger KaTeX rendering
+        // after React components update the DOM. We use a MutationObserver for this.
+        const targetNode = document.getElementById('root');
+        const config = { childList: true, subtree: true };
+
+        const callback = function(mutationsList, observer) {
+            for(const mutation of mutationsList) {
+                if (mutation.type === 'childList') {
+                    if (window.renderMathInElement) {
+                        window.renderMathInElement(document.body, {
+                            delimiters: [
+                                {left: '$$', right: '$$', display: true},
+                                {left: '$', right: '$', display: false}
+                            ]
+                        });
+                    }
+                }
+            }
+        };
+
+        const observer = new MutationObserver(callback);
+        observer.observe(targetNode, config);
+      });
+    </script>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>

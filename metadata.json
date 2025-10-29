@@ -1,0 +1,5 @@
+{
+  "name": "Math Mentor AI",
+  "description": "An interactive web application that acts as a personal math teacher. It offers AI-powered explanations for various math subjects, provides step-by-step solutions, and includes engaging math talent games to make learning fun.",
+  "requestFramePermissions": []
+}
